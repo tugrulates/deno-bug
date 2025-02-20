@@ -1,0 +1,34 @@
+name: CI
+
+on: [push]
+
+permissions: {}
+
+jobs:
+  bug:
+    strategy:
+      matrix:
+        version: [
+          canary,
+          2.2.3,
+          ff970bd9fe6c2dbf1147656d9e21c9b340d6d112,
+          69b59b229678559b5761c501e364d70446d768d2,
+          2.2.2,
+          ]
+      fail-fast: false
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: denoland/setup-deno@v2
+        # with:
+        #   deno-version: ${{ matrix.version }}
+
+      - name: Version
+        run: deno upgrade 2.2.2 && deno upgrade ${{ matrix.version }}
+
+      - name: Check
+        run: deno run bug.ts
