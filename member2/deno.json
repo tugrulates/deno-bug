@@ -1,0 +1,6 @@
+{
+  "name": "member2",
+  "exports": {
+    ".": "./member2.ts"
+  }
+}
